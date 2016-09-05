@@ -8,6 +8,7 @@ Gabriela Suita
 from graphics import *
 import random
 import time
+	
 
 # Janela de configuração da resolução do jogo
 winresolu = GraphWin("Configuração", 500, 500)
@@ -66,11 +67,22 @@ while(cont > 0):
 	time.sleep(1)
 	cont = cont - 1
 	contador.setText(str(cont))
-wingame.close()
+#wingame.close()
 
-# Começar a parte da wave (PREGUIÇAAAAAAAAAAAAAAA!!!!!!)
-
-
+#Waves
+nivel = 1
+while(nivel <= 20 or nivel != -1):
+	if(nivel % 5 == 0):
+		
+	else:
+		cont = 0
+	nivel += 1
+if(nivel == -1):
+	#perdeu
+else:
+	#ganhou
+		
+		
 '''
 	- PNG com a caras dos inimigos;
 	- Fazer lista de objetos GraphWin, reutilizar;
