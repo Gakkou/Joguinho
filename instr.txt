@@ -1,0 +1,16 @@
+=== INSTRUÇÕES ===
+
+Como jogar? 
+
+Você deverá derrotar os políticos corruptos clicando neles. 
+A vida de cada personagem depende do nível.
+
+Cada clique que acerte um político rende 100 pontos de 
+experiência e cada segundo que sobra do seu tempo rende 10 pontos 
+de experiência extras.
+
+São 20 níveis no total, mas os personagens dos níveis 5, 10, 15 e 20 
+são especiais.
+
+Tome cuidado: se você não derrotar os políticos antes de 
+acabar o tempo, você perde o jogo!
