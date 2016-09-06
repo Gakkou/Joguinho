@@ -8,7 +8,7 @@ Gabriela Suita
 from graphics import *
 import random
 import time
-	
+
 
 # Janela de configuração da resolução do jogo
 winresolu = GraphWin("Configuração", 500, 500)
@@ -71,23 +71,28 @@ while(cont > 0):
 
 #Waves
 nivel = 1
-while(nivel <= 20 or nivel != -1):
+while(nivel <= 20 and nivel != -1):
 	if(nivel % 5 == 0):
+		#Wave com chefe
 		
 	else:
-		cont = 0
+		#Wave sem chefe
+		segundo = 0
+		while (segundo < random.randint(, )):
+			
 	nivel += 1
 if(nivel == -1):
 	#perdeu
+	
 else:
 	#ganhou
-		
-		
+	
+
 '''
 	- PNG com a caras dos inimigos;
 	- Fazer lista de objetos GraphWin, reutilizar;
-	- Janelas abertas min: 3, max: 9;
-	- Tempos das janelas max: 8s, min: 3s;
+	- inimigos por wave min: 3, max: 9;
+	- Tempos dos corruptos max: 8s, min: 3s;
 	- Chefes no levels 5, 10, 15, 20. 20 é o "primeiramente";
 	- Janelas tem vidas que dimínuem com o número de clicks;
 	- Janela com o tempo(Retangulo que diminui conforme o tempo que passa);
@@ -96,7 +101,7 @@ else:
 	- Arrumar as janelas auxiliares;
 	- Arrumar o cursor;
 	- Pegar fotos de x políticos;
-	- Transformar as fotos em png ou gif; 
+	- Transformar as fotos em ppm ou gif; 
 	- Recortar os rostos;
 	- Diminuir as resoluções;
 '''
