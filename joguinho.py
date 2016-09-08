@@ -37,6 +37,7 @@ resolu2 = eval(entrada2.getText())
 # Arquivo de instruções
 objinstrucoes = open("instr.txt", 'r')
 instrucoes = objinstrucoes.read()
+objinstrucoes.close()
 
 # Janela principal
 wingame = GraphWin("Joguinho", resolu1, resolu2)
@@ -77,9 +78,22 @@ while(nivel <= 20 and nivel != -1):
 		
 	else:
 		#Wave sem chefe
-		segundo = 0
-		while (segundo < random.randint(, )):
+		tempo = 0
+		ncorrputos = random.randint(4+nivel/4,1+nivel/4)
+		corruptos = []
+		vidacorruptos = []
+		#desenhando os inimigos
+		cont = 0
+		while(cont < ncorruptos):
+			pontoa = Point(random.randint(0, resolu1-200), randomrandint(0, resolu2-200))
+			pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
+			corrupto.append(Rectangle(pontoa, pontob))
+			corrupto[cont].draw()
+			vidacorruptos.append(random.randint(1+nivel/4, 3+nivel/4))
+			cont += 1
+		while(tempo < 9 - nivel/4 and ncorruptos != 0):
 			
+			tempo += 1
 	nivel += 1
 if(nivel == -1):
 	#perdeu
