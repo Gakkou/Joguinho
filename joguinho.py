@@ -8,25 +8,41 @@ Gabriela Suita
 from graphics import *
 import random
 import time
-	
+
 
 # Janela de configuração da resolução do jogo
 winresolu = GraphWin("Configuração", 500, 500)
-presolucao = Text(Point(250, 150), "Digite a resolução desejada:")
+
+fundo_inst = Image(Point(250,250), "fundo1.png")
+fundo_inst.draw(winresolu)
+
+presolucao = Text(Point(250, 150), "Resolução:")
+presolucao.setStyle("bold")
+presolucao.setSize(20)
 presolucao.draw(winresolu)
+
 textox = Text(Point(250, 250), "x")
+textox.setStyle("bold")
+textox.setSize(20)
 textox.draw(winresolu)
+
 entrada1 = Entry(Point(150, 250), 10)
-entrada2 = Entry(Point(350, 250), 10)
+entrada1.setFill("Black")
 entrada1.draw(winresolu)
+
+entrada2 = Entry(Point(350, 250), 10)
+entrada2.setFill("DodgerBlue")
 entrada2.draw(winresolu)
+
 pontob1 = Point(225, 400)
 pontob2 = Point(275, 425)
 botaop1 = Rectangle(pontob1, pontob2)
 botaop1.draw(winresolu)
 botaop2 = Text(botaop1.getCenter(), "Ok!")
 botaop2.draw(winresolu)
+
 click = winresolu.getMouse()
+
 while(click.getX() < pontob1.getX() or click.getX() > pontob2.getX() or click.getY() < pontob1.getY() or click.getY() > pontob2.getY()):
 	click = winresolu.getMouse()
 winresolu.close()
@@ -34,9 +50,13 @@ winresolu.close()
 resolu1 = eval(entrada1.getText())
 resolu2 = eval(entrada2.getText())
 
+
+
 # Arquivo de instruções
 objinstrucoes = open("instr.txt", 'r')
 instrucoes = objinstrucoes.read()
+
+
 
 # Janela principal
 wingame = GraphWin("Joguinho", resolu1, resolu2)
@@ -69,25 +89,32 @@ while(cont > 0):
 	contador.setText(str(cont))
 #wingame.close()
 
+'''
+
 #Waves
 nivel = 1
-while(nivel <= 20 or nivel != -1):
+while(nivel <= 20 and nivel != -1):
 	if(nivel % 5 == 0):
+		#Wave com chefe
 		
 	else:
-		cont = 0
+		#Wave sem chefe
+		segundo = 0
+		while (segundo < random.randint(, )):
+			
 	nivel += 1
 if(nivel == -1):
 	#perdeu
+	
 else:
 	#ganhou
-		
-		
-'''
+	
+
+
 	- PNG com a caras dos inimigos;
 	- Fazer lista de objetos GraphWin, reutilizar;
-	- Janelas abertas min: 3, max: 9;
-	- Tempos das janelas max: 8s, min: 3s;
+	- inimigos por wave min: 3, max: 9;
+	- Tempos dos corruptos max: 8s, min: 3s;
 	- Chefes no levels 5, 10, 15, 20. 20 é o "primeiramente";
 	- Janelas tem vidas que dimínuem com o número de clicks;
 	- Janela com o tempo(Retangulo que diminui conforme o tempo que passa);
@@ -96,7 +123,7 @@ else:
 	- Arrumar as janelas auxiliares;
 	- Arrumar o cursor;
 	- Pegar fotos de x políticos;
-	- Transformar as fotos em png ou gif; 
+	- Transformar as fotos em ppm ou gif; 
 	- Recortar os rostos;
 	- Diminuir as resoluções;
 '''
