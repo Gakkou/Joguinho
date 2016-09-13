@@ -75,11 +75,11 @@ nivel = 1
 while(nivel <= 20 and nivel != -1):
 	if(nivel % 5 == 0):
 		#Wave com chefe
-		
+		print "oi"
 	else:
 		#Wave sem chefe
 		tempo = 0
-		ncorrputos = random.randint(4+nivel/4,1+nivel/4)
+		ncorrputos = random.randint(1+nivel/4, 4+nivel/4)
 		corruptos = []
 		vidacorruptos = []
 		#desenhando os inimigos
@@ -88,19 +88,25 @@ while(nivel <= 20 and nivel != -1):
 			pontoa = Point(random.randint(0, resolu1-200), randomrandint(0, resolu2-200))
 			pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
 			corrupto.append(Rectangle(pontoa, pontob))
-			corrupto[cont].draw()
+			corrupto[cont].draw(wingame)
 			vidacorruptos.append(random.randint(1+nivel/4, 3+nivel/4))
 			cont += 1
 		while(tempo < 9 - nivel/4 and ncorruptos != 0):
-			
+			click = wingame.checkMouse()
+			cont = 0
+			while(cont < ncorruptos and cont != -1):
+				if(cilck.getX() >= corruptos[cont].getP1().getX and click.getX() <= corruptos[cont].getP2().getX() and click.getY() >= corruptos[cont].getP1().getY() and click.getY() <= corruptos[cont].getP2().getY()):
+					vidacorruptos[cont] += -1
+					if (vidacorruptos
 			tempo += 1
 	nivel += 1
-if(nivel == -1):
-	#perdeu
-	
-else:
+'''
+if(nivel >= 20):
 	#ganhou
 	
+else:
+	#perdeu
+'''	
 
 '''
 	- PNG com a caras dos inimigos;
