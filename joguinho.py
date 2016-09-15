@@ -56,29 +56,31 @@ textoinstru.undraw()
 botaop1.undraw()
 botaop2.undraw()
 
-# Contador 
-cont = 3
-contador = Text(Point(resolu1/2, resolu2/2), str(cont))
-contador.setSize(36)
-contador.draw(wingame)
-textoqualquer = Text(Point(resolu1/4, resolu2/2), "O jogo vai começar em:")
-textoqualquer.setSize(36)
-textoqualquer.draw(wingame)
-while(cont > 0):
-	time.sleep(1)
-	cont = cont - 1
-	contador.setText(str(cont))
-contador.undraw()
-textoqualquer.undraw()
-textoqualquer.undraw()
-click = Point(0, 0)
-
 #Waves
 nivel = 1
 while(nivel <= 20 and nivel != -1):
+	#Contador 
+	cont = 3
+	contador = Text(Point(resolu1/2, resolu2/2), str(cont))
+	contador.setSize(36)
+	contador.draw(wingame)
+	if(nivel == 1):
+		texto = "O jogo começa em: "
+	else:
+		texto = "O nivel " + str(nivel) + " começa em: "
+	textoqualquer = Text(Point(resolu1/4, resolu2/2), texto)
+	textoqualquer.setSize(36)
+	textoqualquer.draw(wingame)
+	while(cont > 0):
+		time.sleep(1)
+		cont = cont - 1
+		contador.setText(str(cont))
+	contador.undraw()
+	textoqualquer.undraw()
 	if(nivel % 5 == 0):
 		#Wave com chefe
 		print "oi"
+		nivel += 1
 	else:
 		#Wave sem chefe
 		tempo = 0
@@ -96,31 +98,40 @@ while(nivel <= 20 and nivel != -1):
 			corruptos[cont].draw(wingame)
 			vidacorruptos.append(random.randint(1+nivel/4, 3+nivel/4))
 			cont += 1
-		while(tempo < 9 - nivel/4 and n_inimigos != 0):
+		#começo da wave
+		while(tempo < 9.0 - nivel/4 and n_inimigos != 0):
 			click = wingame.checkMouse()
 			cont = 0
 			while(cont < ncorruptos and cont != -1):
-				pontoa = corruptos[cont].getP1()
-				pontob = corruptos[cont].getP2()
-				if(click.getX() >= pontoa.getX() and click.getX() <= pontob.getX() and click.getY() >= pontoa.getY() and click.getY() <= pontob.getY()):
-					if(vidacorruptos[cont] != 0):
-						vidacorruptos[cont] += -1
-						if(vidacorruptos[cont] == 0):
-							corruptos[cont].undraw()
-							n_inimigos += -1
-						cont = -1
+				if(click != None):	
+					pontoa = corruptos[cont].getP1()
+					pontob = corruptos[cont].getP2()
+					if(click.getX() >= pontoa.getX() and click.getX() <= pontob.getX() and click.getY() >= pontoa.getY() and click.getY() <= pontob.getY()):
+						if(vidacorruptos[cont] != 0):
+							vidacorruptos[cont] += -1
+							if(vidacorruptos[cont] == 0):
+								corruptos[cont].undraw()
+								n_inimigos += -1
+							cont = -1
+						else:
+							cont += 1
+					else:
+						cont += 1
 				else:
-					cont += 1
+					cont = -1
 			time.sleep(0.01)
 			tempo += 0.01
-	nivel += 1
-'''
+		if(n_inimigos != 0):
+			nivel = -1
+		else:
+			nivel += 1
+
 if(nivel >= 20):
-	#ganhou
+	print("ganhou")
 	
 else:
-	#perdeu
-'''	
+	print("perdeu")
+
 
 '''
 	- PNG com a caras dos inimigos;
