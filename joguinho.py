@@ -68,7 +68,10 @@ while(cont > 0):
 	time.sleep(1)
 	cont = cont - 1
 	contador.setText(str(cont))
-#wingame.close()
+contador.undraw()
+textoqualquer.undraw()
+textoqualquer.undraw()
+click = Point(0, 0)
 
 #Waves
 nivel = 1
@@ -85,6 +88,7 @@ while(nivel <= 20 and nivel != -1):
 		vidacorruptos = []
 		#desenhando os inimigos
 		cont = 0
+		click = wingame.checkMouse()
 		while(cont < ncorruptos):
 			pontoa = Point(random.randint(0, resolu1-200), random.randint(0, resolu2-200))
 			pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
@@ -96,7 +100,9 @@ while(nivel <= 20 and nivel != -1):
 			click = wingame.checkMouse()
 			cont = 0
 			while(cont < ncorruptos and cont != -1):
-				if(click.getX() >= corruptos[cont].getP1().getX and click.getX() <= corruptos[cont].getP2().getX() and click.getY() >= corruptos[cont].getP1().getY() and click.getY() <= corruptos[cont].getP2().getY()):
+				pontoa = corruptos[cont].getP1()
+				pontob = corruptos[cont].getP2()
+				if(click.getX() >= pontoa.getX() and click.getX() <= pontob.getX() and click.getY() >= pontoa.getY() and click.getY() <= pontob.getY()):
 					if(vidacorruptos[cont] != 0):
 						vidacorruptos[cont] += -1
 						if(vidacorruptos[cont] == 0):
