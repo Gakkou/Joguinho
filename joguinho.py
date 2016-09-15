@@ -79,26 +79,34 @@ while(nivel <= 20 and nivel != -1):
 	else:
 		#Wave sem chefe
 		tempo = 0
-		ncorrputos = random.randint(1+nivel/4, 4+nivel/4)
+		ncorruptos = random.randint(1+nivel/4, 4+nivel/4)
+		n_inimigos = ncorruptos
 		corruptos = []
 		vidacorruptos = []
 		#desenhando os inimigos
 		cont = 0
 		while(cont < ncorruptos):
-			pontoa = Point(random.randint(0, resolu1-200), randomrandint(0, resolu2-200))
+			pontoa = Point(random.randint(0, resolu1-200), random.randint(0, resolu2-200))
 			pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
-			corrupto.append(Rectangle(pontoa, pontob))
-			corrupto[cont].draw(wingame)
+			corruptos.append(Rectangle(pontoa, pontob))
+			corruptos[cont].draw(wingame)
 			vidacorruptos.append(random.randint(1+nivel/4, 3+nivel/4))
 			cont += 1
-		while(tempo < 9 - nivel/4 and ncorruptos != 0):
+		while(tempo < 9 - nivel/4 and n_inimigos != 0):
 			click = wingame.checkMouse()
 			cont = 0
 			while(cont < ncorruptos and cont != -1):
-				if(cilck.getX() >= corruptos[cont].getP1().getX and click.getX() <= corruptos[cont].getP2().getX() and click.getY() >= corruptos[cont].getP1().getY() and click.getY() <= corruptos[cont].getP2().getY()):
-					vidacorruptos[cont] += -1
-					if (vidacorruptos
-			tempo += 1
+				if(click.getX() >= corruptos[cont].getP1().getX and click.getX() <= corruptos[cont].getP2().getX() and click.getY() >= corruptos[cont].getP1().getY() and click.getY() <= corruptos[cont].getP2().getY()):
+					if(vidacorruptos[cont] != 0):
+						vidacorruptos[cont] += -1
+						if(vidacorruptos[cont] == 0):
+							corruptos[cont].undraw()
+							n_inimigos += -1
+						cont = -1
+				else:
+					cont += 1
+			time.sleep(0.01)
+			tempo += 0.01
 	nivel += 1
 '''
 if(nivel >= 20):
