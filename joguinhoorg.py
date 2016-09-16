@@ -1,0 +1,103 @@
+#coding=UTF-8
+'''
+	Joguinho:
+	Lucas S. Avila 111136
+	Gabriela R. Suita
+'''
+
+from graphics import *
+import random
+import time
+
+# Janela de configuração
+def resolu_config():
+	global resolu1 = 1280	# Resolução padrão
+	global resolu2 = 720
+	winresolu = GraphWin("Configuração", 500, 500)
+	# Textos
+	presolucao = Text(Point(250, 150), "Digite a resolução desejada:")
+	presolucao.draw(winresolu)
+	textox = Text(Point(250, 250), "x")
+	textox.draw(winresolu)
+	# Entradas
+	entrada1 = Entry(Point(150, 250), 10)
+	entrada2 = Entry(Point(350, 250), 10)
+	entrada1.draw(winresolu)
+	entrada2.draw(winresolu)
+	# Desenhando botão
+	pontob1 = Point(225, 400)
+	pontob2 = Point(275, 425)
+	botaop1 = Rectangle(pontob1, pontob2)
+	botaop1.draw(winresolu)
+	botaop2 = Text(botaop1.getCenter(), "Ok!")
+	botaop2.draw(winresolu)
+	# Checando o click
+	click = winresolu.getMouse()
+	while(click.getX() < pontob1.getX() or click.getX() > pontob2.getX() or click.getY() < pontob1.getY() or click.getY() > pontob2.getY()):
+		click = winresolu.getMouse()
+	winresolu.close()
+	# Resolução
+	resolu1 = eval(entrada1.getText())
+	resolu2 = eval(entrada2.getText())
+
+# Janela Principal
+def win_principal(resolu1, resolu2):
+	wingame = GraphWin("Joguinho", resolu1, resolu2)
+	return (wingame)
+
+# Instruções
+def instru(wingame, resolu1, resolu2):
+	# Lendo do arquivo
+	objinstrucoes = open("instr.txt", 'r')
+	instrucoes = objinstrucoes.read()
+	objinstrucoes.close()
+	# Escrevendo na janela
+	textoinstru = Text(Point(resolu1/2, resolu2/2), instrucoes)
+	textoinstru.draw(wingame)
+	# Desenhando botão
+	botaop1 = Rectangle(Point(resolu1/2 - 50, resolu2 - 105), Point(resolu1/2 + 50, resolu2 - 80))
+	botaop1.draw(wingame)
+	botaop2 = Text(botaop1.getCenter(), "Começar!")
+	botaop2.draw(wingame)
+	# Checando o click
+	click = wingame.getMouse()
+	while(click.getX() < pontob1.getX() or click.getX() > pontob2.getX() or click.getY() < pontob1.getY() or click.getY() > pontob2.getY()):
+		click = wingame.getMouse()
+	textoinstru.undraw()
+	botaop1.undraw()
+	botaop2.undraw()
+
+# Contador
+def contador(nivel, wingame, resolu1, resolu2):
+	# Desenhando o tempo do contador
+	cont = 3
+	contador = Text(Point(resolu1/2, resolu2/2), str(cont))
+	contador.setSize(36)
+	contador.draw(wingame)
+	# Testa o nivel
+	if(nivel == 1):
+		texto = "O jogo começa em: "
+	else:
+		texto = "O nivel " + str(nivel) + " começa em: "
+	# Desenha o texto
+	textoqualquer = Text(Point(resolu1/4, resolu2/2), texto)
+	textoqualquer.setSize(36)
+	textoqualquer.draw(wingame)
+	# Conta o tempo
+	while(cont > 0):
+		time.sleep(1)
+		cont = cont - 1
+		contador.setText(str(cont))
+	contador.undraw()
+	textoqualquer.undraw()
+
+# Rodando o jogo
+def Jogo():
+	resolu_config()								# Chama a janela de configuração
+	wingame = win_principal(resolu1, resolu2)	# Cria a Janela Principal
+	instru()									# Mostra as instruções
+	nivel = 1
+	perdeu = 0
+	while(perdeu != -1):
+		
+	
