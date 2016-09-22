@@ -11,8 +11,11 @@ import time
 
 # Janela de configuração
 def resolu_config():
-	global resolu1 = 1280	# Resolução padrão
-	global resolu2 = 720
+	# Resolução padrão
+	global resolu1 
+	global resolu2
+	resolu1 = 1280
+	resolu2 = 720
 	winresolu = GraphWin("Configuração", 500, 500)
 	# Textos
 	presolucao = Text(Point(250, 150), "Digite a resolução desejada:")
@@ -61,7 +64,7 @@ def instru(wingame, resolu1, resolu2):
 	botaop2.draw(wingame)
 	# Checando o click
 	click = wingame.getMouse()
-	while(click.getX() < pontob1.getX() or click.getX() > pontob2.getX() or click.getY() < pontob1.getY() or click.getY() > pontob2.getY()):
+	while(click.getX() < botaop1.getP1().getX() or click.getX() > botaop1.getP2().getX() or click.getY() < botaop1.getP1().getY() or click.getY() > botaop1.getP2().getY()):
 		click = wingame.getMouse()
 	textoinstru.undraw()
 	botaop1.undraw()
@@ -90,14 +93,40 @@ def contador(nivel, wingame, resolu1, resolu2):
 		contador.setText(str(cont))
 	contador.undraw()
 	textoqualquer.undraw()
+	
+# Criando inimigos e suas características únicas
+def criarini(nivel):
+	# Respawn
+	global ini
+	global mexer
+	global vida
+	iniimg = ["fabio", "dirceu", "maranhão", "renan", "aecio", "feliciano", "cunha", "bolsonaro", "temer"]
+	mexer = [0, 0, 0, 0, 0, nivel, random.randint(nivel, 2*nivel), random.randint(nivel, 3*nivel), random.randint(nivel, 4*nivel)]
+	vida = [random.randint(1, 1+nivel/4), random.randint(1+nivel/4, 1+nivel/2), random.randint(1+nivel/2, nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, nivel/4), random.randint(nivel/4, nivel/2), random.randint(nivel/2, nivel), random.randint(nivel, 4*nivel/3)]
+	# Desenhando no jogo
+	global nini
+	global initela
+	global vidainitela
+	initela = []
+	vidainitela = []
+	nini = random.randint(1+nivel/4, 4+nivel/4)
+	cont = 0
+	while(cont < nini):
+		pontoa = Point(random.randint(0, resolu1-200), random.randint(0, resolu2-200))
+		pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
+		initela.append(Rectangle(pontoa, pontob))
+		initela[cont].draw(wingame)
+		
+		cont += 1
 
 # Rodando o jogo
 def Jogo():
 	resolu_config()								# Chama a janela de configuração
 	wingame = win_principal(resolu1, resolu2)	# Cria a Janela Principal
-	instru()									# Mostra as instruções
+	instru(wingame, resolu1, resolu2)			# Mostra as instruções
 	nivel = 1
-	perdeu = 0
-	while(perdeu != -1):
-		
-	
+	vida = 3		#vida do jogador
+	while(vida > 0):
+		contador(nivel, wingame, resolu1, resolu2)
+			
+Jogo()
