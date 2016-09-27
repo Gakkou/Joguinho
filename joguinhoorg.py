@@ -95,28 +95,35 @@ def contador(nivel, wingame, resolu1, resolu2):
 	textoqualquer.undraw()
 	
 # Criando inimigos e suas características únicas
-def criarini(nivel):
+def criarini(nivel, wingame, resolu1, resolu2):
+	# Criar o desenho das imagens!!!!
+	
 	# Respawn
-	global ini
-	global mexer
-	global vida
-	iniimg = ["fabio", "dirceu", "maranhão", "renan", "aecio", "feliciano", "cunha", "bolsonaro", "temer"]
+	iniimg = ["fabio", "dirceu", "maranhão", "renan", "aecio", "feliciano", "cunha", "bolsonaro", "temer"] # Vão ser imagens!!!!
 	mexer = [0, 0, 0, 0, 0, nivel, random.randint(nivel, 2*nivel), random.randint(nivel, 3*nivel), random.randint(nivel, 4*nivel)]
-	vida = [random.randint(1, 1+nivel/4), random.randint(1+nivel/4, 1+nivel/2), random.randint(1+nivel/2, nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, nivel/4), random.randint(nivel/4, nivel/2), random.randint(nivel/2, nivel), random.randint(nivel, 4*nivel/3)]
+	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, 2+nivel/4), random.randint(nivel/4, 2+nivel/2), random.randint(nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
 	# Desenhando no jogo
 	global nini
 	global initela
+	global imginitela
 	global vidainitela
+	global mexerinitela
 	initela = []
+	imginitela = []
 	vidainitela = []
+	mexerinitela = []
 	nini = random.randint(1+nivel/4, 4+nivel/4)
 	cont = 0
 	while(cont < nini):
 		pontoa = Point(random.randint(0, resolu1-200), random.randint(0, resolu2-200))
 		pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
 		initela.append(Rectangle(pontoa, pontob))
-		initela[cont].draw(wingame)
-		
+		initela[cont].draw(wingame)		# Temporário
+		imginitela.append(random.choice(iniimg))  
+		#imginitela[cont].draw(wingame)	# Quando juntar com as imagens
+		cont1 = iniimg.index(imginitela[cont])
+		vidainitela.append(vida[cont1])
+		mexerinitela.append(mexer[cont1])
 		cont += 1
 
 # Rodando o jogo
@@ -127,6 +134,38 @@ def Jogo():
 	nivel = 1
 	vida = 3		#vida do jogador
 	while(vida > 0):
+		ninitela = 1
+		tempo = 0.0
 		contador(nivel, wingame, resolu1, resolu2)
-			
+		criarini(nivel, wingame, resolu1, resolu2)
+		ninitela = nini
+		while(vida > 0  and tempo < 9.0 - nivel/4 and ninitela > 0):
+			click = wingame.checkMouse()
+			cont = 0
+			while(cont < nini and cont != -1):
+				if(click != None):	
+					pontoa = initela[cont].getP1()
+					pontob = initela[cont].getP2()
+					if(click.getX() >= pontoa.getX() and click.getX() <= pontob.getX() and click.getY() >= pontoa.getY() and click.getY() <= pontob.getY()):
+						if(vidainitela[cont] != 0):
+							vidainitela[cont] += -1
+							if(vidainitela[cont] == 0):
+								initela[cont].undraw() #temporário
+								#imginitela
+								ninitela += -1
+							cont = -1
+						else:
+							cont += 1
+					else:
+						cont += 1
+				else:
+					cont = -1
+			cont = 0
+			while(cont < nini):
+				initela[cont].move(mexerinitela[cont]*random.randint(-1,1),mexerinitela[cont]*random.randint(-1,1))
+				cont += 1
+			time.sleep(0.01)
+			tempo += 0.01
+		nivel += 1
+
 Jogo()
