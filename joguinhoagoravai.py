@@ -99,7 +99,7 @@ def criarini(nivel, wingame, resolu1, resolu2):
 	# Criar o desenho das imagens!!!!
 	
 	# Respawn
-	iniimg = ["fabio", "dirceu", "maranhão", "renan", "aecio", "feliciano", "cunha", "bolsonaro", "temer"] # Vão ser imagens!!!!
+	iniimg = ["fabiob1.png", "dirceu1.png", "maranhao1.png", "renanc1.png", "aecio.png", "feliciano1.png", "cunha1.png", "bolsonaropai2.png", "temer1.png"]
 	mexer = [0, 0, 0, 0, 0, nivel, random.randint(nivel, 2*nivel), random.randint(nivel, 3*nivel), random.randint(nivel, 4*nivel)]
 	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, 2+nivel/4), random.randint(nivel/4, 2+nivel/2), random.randint(nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
 	# Desenhando no jogo
@@ -119,17 +119,18 @@ def criarini(nivel, wingame, resolu1, resolu2):
 		pontob = Point(pontoa.getX()+200, pontoa.getY()+200)
 		initela.append(Rectangle(pontoa, pontob))
 		initela[cont].draw(wingame)		# Temporário
-		imginitela.append(random.choice(iniimg))  
-		#imginitela[cont].draw(wingame)	# Quando juntar com as imagens
-		cont1 = iniimg.index(imginitela[cont])
+		img = random.choice(iniimg)
+		imginitela.append(Image(initela[cont].getCenter(), img))
+		imginitela[cont].draw(wingame)
+		cont1 = iniimg.index(img)
 		vidainitela.append(vida[cont1])
 		mexerinitela.append(mexer[cont1])
 		cont += 1
 
 # Rodando o jogo
 def Jogo():
-	resolu_config()								# Chama a janela de configuração
-	wingame = win_principal(resolu1, resolu2)	# Cria a Janela Principal
+	resolu_config()						# Chama a janela de configuração
+	wingame = win_principal(resolu1, resolu2)		# Cria a Janela Principal
 	instru(wingame, resolu1, resolu2)			# Mostra as instruções
 	nivel = 1
 	vida = 3		#vida do jogador
@@ -151,7 +152,7 @@ def Jogo():
 							vidainitela[cont] += -1
 							if(vidainitela[cont] == 0):
 								initela[cont].undraw() #temporário
-								#imginitela
+								imginitela[cont].undraw()
 								ninitela += -1
 							cont = -1
 						else:
@@ -162,7 +163,10 @@ def Jogo():
 					cont = -1
 			cont = 0
 			while(cont < nini):
-				initela[cont].move(mexerinitela[cont]*random.randint(-1,1),mexerinitela[cont]*random.randint(-1,1))
+				moverx = mexerinitela[cont]*random.randint(-1,1)
+				movery = mexerinitela[cont]*random.randint(-1,1)
+				initela[cont].move(moverx, movery)
+				imginitela[cont].move(moverx,movery)
 				cont += 1
 			time.sleep(0.01)
 			tempo += 0.01
