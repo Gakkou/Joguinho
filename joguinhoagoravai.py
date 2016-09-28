@@ -166,6 +166,9 @@ def Jogo():
 				cont += 1
 			time.sleep(0.01)
 			tempo += 0.01
+		if(ninitela != 0):
+			#diminuir vida com número de inimigos não mortos
+			vida += -1
 		nivel += 1
 
 Jogo()
