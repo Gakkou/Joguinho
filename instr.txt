@@ -2,15 +2,14 @@
 
 Como jogar? 
 
-Você deverá derrotar os políticos corruptos clicando neles. 
-A vida de cada personagem depende do nível.
+Você deverá derrotar os políticos corruptos clicando neles até que eles apareçam atrás das grades. 
+A vida depende de cada personagem, e ela aumenta conforme o nível.
 
-Cada clique que acerte um político rende 100 pontos de 
-experiência e cada segundo que sobra do seu tempo rende 10 pontos 
-de experiência extras.
+Além disso, alguns personagens se movem no senado, se eles sumirem da tela antes
+que você os derrote, você perde uma vida!
 
-São 20 níveis no total, mas os personagens dos níveis 5, 10, 15 e 20 
-são especiais.
+Cada clique que acerte um político rende 100 pontos que te deixarão melhor colocado no ranking e cada segundo que sobra do seu
+tempo rende 10 pontos de extras. Um nível terminado com sucesso vale 1000 pontos.
 
-Tome cuidado: se você não derrotar os políticos antes de 
-acabar o tempo, você perde o jogo!
+Tome cuidado: se você não derrotar os políticos antes de acabar o tempo, a corrupção será consumada!
+Você só tem 3 chances para ajudar o futuro da nação.
