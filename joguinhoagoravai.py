@@ -63,6 +63,9 @@ def resolu_config():
 # Janela Principal
 def win_principal(resolu1, resolu2):
 	wingame = GraphWin("Joguinho", resolu1, resolu2)
+	# Imagem de fundo
+	fundo_inst = Image(Point(resolu1/2,resolu2/2), "fundo.png")
+	fundo_inst.draw(wingame)
 	return (wingame)
 
 # Instruções
@@ -71,9 +74,6 @@ def instru(wingame, resolu1, resolu2):
 	objinstrucoes = open("instr.txt", 'r')
 	instrucoes = objinstrucoes.read()
 	objinstrucoes.close()
-	# Imagem de fundo
-	fundo_inst = Image(Point(resolu1/2,resolu2/2), "fundo.png")
-	fundo_inst.draw(wingame)
 	# Escrevendo na janela
 	textoinstru = Text(Point(resolu1/2, resolu2/2), instrucoes)
 	textoinstru.setStyle("bold")
@@ -84,7 +84,7 @@ def instru(wingame, resolu1, resolu2):
 	botaop1 = Rectangle(Point(resolu1/2 - 50, resolu2 - 105), Point(resolu1/2 + 50, resolu2 - 80))
 	botaop1.setFill("White")
 	botaop1.draw(wingame)
-	botaop2 = Text(botaop1.getCenter(), "Começar!")
+	botaop2 = Text(botaop1.getCenter(), "Ok!")
 	botaop2.draw(wingame)
 	# Checando o click
 	click = wingame.getMouse()
@@ -156,11 +156,82 @@ def criarini(nivel, wingame, resolu1, resolu2):
 		celas.append(Image(initela[cont].getCenter(), "cela.png"))
 		cont += 1
 
+# Menu do jogo
+def Menu():
+	wingame = win_principal(resolu1, resolu2)
+	teste = 1
+	desenho_io = 0
+	while(teste == 1):
+		if(desenho_io == 0):
+			# Botão iniciar
+			A1 = Point(resolu1/2 - 40, resolu2/2 - 80)
+			A2 = Point(resolu1/2 + 40, resolu2/2 - 55)
+			iniciarretan = Rectangle(A1, A2)
+			iniciarretan.setFill("White")
+			iniciarretan.draw(wingame)
+			iniciartexto = Text(iniciarretan.getCenter(), "Iniciar!")
+			iniciartexto.draw(wingame)
+			# Botão instru
+			B1 = Point(resolu1/2 - 40, resolu2/2 - 35)
+			B2 = Point(resolu1/2 + 40, resolu2/2 - 10)
+			instruretan = Rectangle(B1, B2)
+			instruretan.setFill("White")
+			instruretan.draw(wingame)
+			instrutexto = Text(instruretan.getCenter(), "Instruções")
+			instrutexto.draw(wingame)
+			# Botão placar
+			C1 = Point(resolu1/2 - 40, resolu2/2 + 10)
+			C2 = Point(resolu1/2 + 40, resolu2/2 + 35)
+			placarretan = Rectangle(C1, C2)
+			placarretan.setFill("white")
+			placarretan.draw(wingame)
+			placartexto = Text(placarretan.getCenter(), "Placar")
+			placartexto.draw(wingame)
+			# Botão sair
+			D1 = Point(resolu1/2 - 40, resolu2/2 + 55)
+			D2 = Point(resolu1/2 + 40, resolu2/2 + 80)
+			sairretan = Rectangle(D1, D2)
+			sairretan.setFill("white")
+			sairretan.draw(wingame)
+			sairtexto = Text(sairretan.getCenter(), "Sair")
+			sairtexto.draw(wingame)
+			desenho_io = 1
+		click = wingame.getMouse()
+		if(click.getX() >= A1.getX() and click.getX() <= A2.getX() and click.getY() >= A1.getY() and click.getY() <= A2.getY()):
+			# Botão iniciar
+			iniciarretan.undraw()
+			iniciartexto.undraw()
+			instruretan.undraw()
+			instrutexto.undraw()
+			placarretan.undraw()
+			placartexto.undraw()
+			sairretan.undraw()
+			sairtexto.undraw()
+			desenho_io = 0
+			Jogo(wingame)
+			parabains()
+			registroscore()
+		elif(click.getX() >= B1.getX() and click.getX() <= B2.getX() and click.getY() >= B1.getY() and click.getY() <= B2.getY()):
+			# Botão instruções
+			iniciarretan.undraw()
+			iniciartexto.undraw()
+			instruretan.undraw()
+			instrutexto.undraw()
+			placarretan.undraw()
+			placartexto.undraw()
+			sairretan.undraw()
+			sairtexto.undraw()
+			desenho_io = 0
+			instru(wingame, resolu1, resolu2)
+		elif(click.getX() >= C1.getX() and click.getX() <= C2.getX() and click.getY() >= C1.getY() and click.getY() <= C2.getY()):
+			# Botão placar
+			teladescore()
+		elif(click.getX() >= D1.getX() and click.getX() <= D2.getX() and click.getY() >= D1.getY() and click.getY() <= D2.getY()):
+			# Botão sair
+			teste = 0
+
 # Rodando o jogo
-def Jogo():
-	resolu_config()						# Chama a janela de configuração
-	wingame = win_principal(resolu1, resolu2)		# Cria a Janela Principal
-	instru(wingame, resolu1, resolu2)			# Mostra as instruções
+def Jogo(wingame):
 	global score
 	nivel = 1
 	score = 0		# Pontuação
@@ -216,7 +287,6 @@ def Jogo():
 			cont += 1
 		nivel += 1
 		score +=10*(9.0 - nivel/4 - tempo) + 1000
-	wingame.close()
 	
 # Tela de parabéns
 def parabains():
@@ -226,13 +296,13 @@ def parabains():
 	wincongrats.getMouse()
 	wincongrats.close()
 
-# Tela de score
-def telascore():
-	winscore = GraphWin("Placar", 500, 600)
+# Registro de Score
+def registroscore():
+	winscore = GraphWin("Registro", 500, 600)
 	entrada = Entry(Point(250, 300), 10)
 	entrada.setText("Usuario")
 	entrada.draw(winscore)
-	texto = Text(Point(250, 200), "Digite a o seu nome:")
+	texto = Text(Point(250, 200), "Digite o seu nome (SEM ACENTOS):")
 	texto.draw(winscore)
 	botaop1 = Rectangle(Point(225, 550), Point(275, 575))
 	botaop1.setFill("White")
@@ -273,13 +343,19 @@ def telascore():
 	arqplacar = open("placar.txt", 'w')
 	arqplacar.writelines(texto)
 	arqplacar.close()
+	winscore.close()
+	teladescore()
+	
+# Tela de Score
+def teladescore():
+	winscore = GraphWin("Placar", 500, 600)
 	arqplacar = open("placar.txt", 'r')
 	texto = arqplacar.read()
 	arqplacar.close()
 	textotela = Text(Point(250, 300), texto)
 	textotela.draw(winscore)
 	winscore.getMouse()
+	winscore.close()
 
-Jogo()
-parabains()
-telascore()
+resolu_config()
+Menu()
