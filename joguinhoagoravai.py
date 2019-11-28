@@ -90,9 +90,9 @@ def drawTime(time):
 # Criando inimigos e suas características únicas
 def criarini(nivel, wingame, resolu1, resolu2):
 	# Características de cada
-	iniimg = ["resources/trash1.png", "resources/trash2.png", "resources/trash3.png", "resources/trash4.png", "aecio.png", "feliciano2.png", "cunha1.png", "bolsonaropai2.png", "temer1.png"]
-	mexer = [0, 0, 0, 0, 0, nivel, random.randint(1+(2*nivel)/3, 2+nivel), random.randint(nivel, 1+(3*nivel)/2), random.randint(nivel, 1+(4*nivel)/3)]
-	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
+	iniimg = ["resources/trash1.png", "resources/trash2.png", "resources/trash3.png", "resources/trash4.png"]
+	mexer = [nivel, random.randint(1+(2*nivel)/3, 2+nivel), random.randint(nivel, 1+(3*nivel)/2), random.randint(nivel, 1+(4*nivel)/3)]
+	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
 	# Desenhando no jogo
 	global nini
 	global initela
@@ -229,8 +229,7 @@ def Jogo(wingame):
 							score += 100
 							vidainitela[cont] += -1
 							if(vidainitela[cont] == 0):
-								#initela[cont].undraw() #temporário
-								celas[cont].draw(wingame)
+								initela[cont].undraw()
 								ninitela += -1
 							cont = -1
 						else:
