@@ -2,69 +2,20 @@
 '''
 	Joguinho:
 	Lucas S. Avila 111136
-	Gabriela R. Suita
 '''
 
 from graphics import *
 import random
 import time
 
-# Janela de configuração
-def resolu_config():
-	# Resolução padrão
-	global resolu1 
-	global resolu2
-	resolu1 = 1280
-	resolu2 = 720
-	winresolu = GraphWin("Configuração", 500, 500)
-	# Imagem de fundo
-	fundo_config = Image(Point(250,250), "fundo1.png")
-	fundo_config.draw(winresolu)
-	# Textos
-	presolucao = Text(Point(250, 150), "Digite a resolução:")
-	presolucao.setStyle("bold")
-	presolucao.setSize(20)
-	presolucao.draw(winresolu)
-	textox = Text(Point(250, 250), "x")
-	textox.setStyle("bold")
-	textox.setSize(20)
-	textox.draw(winresolu)
-	# Entradas
-	entrada1 = Entry(Point(150, 250), 10)
-	entrada1.setFill("White")
-	entrada2 = Entry(Point(350, 250), 10)
-	entrada2.setFill("White")
-	entrada1.draw(winresolu)
-	entrada2.draw(winresolu)
-	# Desenhando botão
-	pontob1 = Point(225, 400)
-	pontob2 = Point(275, 425)
-	botaop1 = Rectangle(pontob1, pontob2)
-	botaop1.setFill("White")
-	botaop1.draw(winresolu)
-	botaop2 = Text(botaop1.getCenter(), "Ok!")
-	botaop2.draw(winresolu)
-	# Checando o click
-	click = winresolu.getMouse()
-	while(click.getX() < pontob1.getX() or click.getX() > pontob2.getX() or click.getY() < pontob1.getY() or click.getY() > pontob2.getY()):
-		click = winresolu.getMouse()
-	winresolu.close()
-	# Checando resolução (minimo:700x700)
-	if (eval(entrada1.getText())<700):
-		resolu1=700
-	else:
-		resolu1 = eval(entrada1.getText())
-
-	if (eval(entrada2.getText())<700):
-		resolu2=700
-	else:
-		resolu2 = eval(entrada2.getText())
+resolu1 = 700
+resolu2 = 700
 
 # Janela Principal
 def win_principal(resolu1, resolu2):
 	wingame = GraphWin("Joguinho", resolu1, resolu2)
 	# Imagem de fundo
-	fundo_inst = Image(Point(resolu1/2,resolu2/2), "fundo.png")
+	fundo_inst = Image(Point(resolu1/2,resolu2/2), "resources/sea.png")
 	fundo_inst.draw(wingame)
 	return (wingame)
 
@@ -121,11 +72,25 @@ def contador(nivel, wingame, resolu1, resolu2):
 		contador.setText(str(cont))
 	contador.undraw()
 	textoqualquer.undraw()
+
+def drawLife(vida):
+	textoqualquer = Text(Point(600, 650), "Vida: " + str(vida))
+	textoqualquer.setSize(25)
+	textoqualquer.setFill("White")
+	textoqualquer.setStyle("bold")
+	return textoqualquer
+
+def drawTime(time):
+	textoqualquer = Text(Point(100, 650), "Tempo: " + str(time))
+	textoqualquer.setSize(25)
+	textoqualquer.setFill("White")
+	textoqualquer.setStyle("bold")
+	return textoqualquer
 	
 # Criando inimigos e suas características únicas
 def criarini(nivel, wingame, resolu1, resolu2):
 	# Características de cada
-	iniimg = ["fabiob2.png", "dirceu1.png", "maranhao2.png", "renanc2.png", "aecio.png", "feliciano2.png", "cunha1.png", "bolsonaropai2.png", "temer1.png"]
+	iniimg = ["resources/trash1.png", "resources/trash2.png", "resources/trash3.png", "resources/trash4.png", "aecio.png", "feliciano2.png", "cunha1.png", "bolsonaropai2.png", "temer1.png"]
 	mexer = [0, 0, 0, 0, 0, nivel, random.randint(1+(2*nivel)/3, 2+nivel), random.randint(nivel, 1+(3*nivel)/2), random.randint(nivel, 1+(4*nivel)/3)]
 	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3), random.randint(4*nivel/3, 3*nivel/2), random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
 	# Desenhando no jogo
@@ -242,7 +207,17 @@ def Jogo(wingame):
 		contador(nivel, wingame, resolu1, resolu2)
 		criarini(nivel, wingame, resolu1, resolu2)
 		ninitela = nini
+		textoVida = drawLife(vida)
+		textoVida.draw(wingame)
+		tempoRestante = int(9.0 - nivel/4 - tempo)
+		textoTempo = drawTime(tempoRestante)
+		textoTempo.draw(wingame)
 		while(vida > 0  and tempo < 9.0 - nivel/4 and ninitela > 0):
+			if tempoRestante != int(9.0 - nivel/4 - tempo):
+				tempoRestante = int(9.0 - nivel/4 - tempo)
+				textoTempo.undraw()
+				textoTempo = drawTime(tempoRestante)
+				textoTempo.draw(wingame)
 			click = wingame.checkMouse()
 			cont = 0
 			while(cont < nini and cont != -1):
@@ -287,11 +262,13 @@ def Jogo(wingame):
 			cont += 1
 		nivel += 1
 		score +=10*(9.0 - nivel/4 - tempo) + 1000
+		textoTempo.undraw()
+		textoVida.undraw()
 	
 # Tela de parabéns
 def parabains():
 	wincongrats = GraphWin("Parabéns", 300, 200)
-	texto = Text(Point(150, 100), "Primeiramente FORA TEMER!!!\n\nSua pontuação foi de " + str(score) + " pontos.")
+	texto = Text(Point(150, 100), "Parabéns!!!\n\nSua pontuação foi de " + str(score) + " pontos.")
 	texto.draw(wincongrats)
 	wincongrats.getMouse()
 	wincongrats.close()
@@ -357,5 +334,4 @@ def teladescore():
 	winscore.getMouse()
 	winscore.close()
 
-resolu_config()
 Menu()
