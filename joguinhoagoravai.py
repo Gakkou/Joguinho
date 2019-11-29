@@ -8,12 +8,12 @@ from graphics import *
 import random
 import time
 
-resolu1 = 700
-resolu2 = 700
+resolu1 = 900
+resolu2 = 650
 
 # Janela Principal
 def win_principal(resolu1, resolu2):
-	wingame = GraphWin("Joguinho", resolu1, resolu2)
+	wingame = GraphWin("Salve os mares", resolu1, resolu2)
 	# Imagem de fundo
 	fundo_inst = Image(Point(resolu1/2,resolu2/2), "resources/sea.png")
 	fundo_inst.draw(wingame)
@@ -26,7 +26,7 @@ def instru(wingame, resolu1, resolu2):
 	instrucoes = objinstrucoes.read()
 	objinstrucoes.close()
 	# Escrevendo na janela
-	textoinstru = Text(Point(resolu1/2, resolu2/2), instrucoes)
+	textoinstru = Text(Point(resolu1/2, resolu2/2 - 50), instrucoes)
 	textoinstru.setStyle("bold")
 	textoinstru.setSize(15)
 	textoinstru.setFill("White")
@@ -74,14 +74,14 @@ def contador(nivel, wingame, resolu1, resolu2):
 	textoqualquer.undraw()
 
 def drawLife(vida):
-	textoqualquer = Text(Point(600, 650), "Vida: " + str(vida))
+	textoqualquer = Text(Point(resolu1 - 100, resolu2 - 50), "Vida: " + str(vida))
 	textoqualquer.setSize(25)
 	textoqualquer.setFill("White")
 	textoqualquer.setStyle("bold")
 	return textoqualquer
 
 def drawTime(time):
-	textoqualquer = Text(Point(100, 650), "Tempo: " + str(time))
+	textoqualquer = Text(Point(100, resolu2 - 50), "Tempo: " + str(time))
 	textoqualquer.setSize(25)
 	textoqualquer.setFill("White")
 	textoqualquer.setStyle("bold")
@@ -90,21 +90,19 @@ def drawTime(time):
 # Criando inimigos e suas características únicas
 def criarini(nivel, wingame, resolu1, resolu2):
 	# Características de cada
-	iniimg = ["resources/trash1.png", "resources/trash2.png", "resources/trash3.png", "resources/trash4.png"]
-	mexer = [nivel, random.randint(1+(2*nivel)/3, 2+nivel), random.randint(nivel, 1+(3*nivel)/2), random.randint(nivel, 1+(4*nivel)/3)]
-	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3)]
+	iniimg = ["resources/trash1.png", "resources/trash2.png", "resources/trash3.png", "resources/trash4.png", "resources/trash5.png"]
+	mexer = [nivel, random.randint(1+(2*nivel)/3, 2+nivel), random.randint(nivel, 1+(3*nivel)/2), random.randint(nivel, 1+(4*nivel)/3), random.randint(nivel, 1+(4*nivel)/3)]
+	vida = [random.randint(1, 2+nivel/4), random.randint(1+nivel/4, 2+nivel/2), random.randint(1+nivel/2, 2+nivel), random.randint(nivel, 4*nivel/3), random.randint(nivel, 4*nivel/3)]
 	# Desenhando no jogo
 	global nini
 	global initela
 	global imginitela
 	global vidainitela
 	global mexerinitela
-	global celas
 	initela = []		# Área de detecção
 	imginitela = []		# A imagem
 	vidainitela = []	# A vida
 	mexerinitela = []	# A movimentação
-	celas = []
 	nini = random.randint(1+nivel/4, 4+nivel/4)
 	cont = 0
 	while(cont < nini):
@@ -118,7 +116,23 @@ def criarini(nivel, wingame, resolu1, resolu2):
 		cont1 = iniimg.index(img)
 		vidainitela.append(vida[cont1])
 		mexerinitela.append(mexer[cont1])
-		celas.append(Image(initela[cont].getCenter(), "cela.png"))
+		cont += 1
+
+def criarVida(wingame, resolu1, resolu2):
+	fishImg = ["resources/fish1.png", "resources/fish2.png", "resources/fish3.png"]
+	global nvida
+	global imgvida
+	global vel
+	vel = random.randint(1, 15)
+	nvida = []
+	imgvida = []
+	nvida = random.randint(2, 10)
+	cont = 0
+	while(cont<nvida):
+		ponto = Point(random.randint(0, resolu1-200), random.randint(0, resolu2-200))
+		img = random.choice(fishImg)
+		imgvida.append(Image(ponto, img))
+		imgvida[cont].draw(wingame)
 		cont += 1
 
 # Menu do jogo
@@ -206,6 +220,7 @@ def Jogo(wingame):
 		tempo = 0.0
 		contador(nivel, wingame, resolu1, resolu2)
 		criarini(nivel, wingame, resolu1, resolu2)
+		criarVida(wingame, resolu1, resolu2)
 		ninitela = nini
 		textoVida = drawLife(vida)
 		textoVida.draw(wingame)
@@ -230,6 +245,7 @@ def Jogo(wingame):
 							vidainitela[cont] += -1
 							if(vidainitela[cont] == 0):
 								initela[cont].undraw()
+								imginitela[cont].undraw()
 								ninitela += -1
 							cont = -1
 						else:
@@ -245,7 +261,12 @@ def Jogo(wingame):
 					movery = mexerinitela[cont]*random.randint(-1,1)
 					initela[cont].move(moverx, movery)
 					imginitela[cont].move(moverx, movery)
-					celas[cont].move(moverx, movery)
+				cont += 1
+			cont = 0
+			while(cont < nvida):
+				moverx = vel*random.randint(-1,1)
+				movery = vel*random.randint(-1,1)
+				imgvida[cont].move(moverx, movery)
 				cont += 1
 			time.sleep(0.01)
 			tempo += 0.01
@@ -257,7 +278,10 @@ def Jogo(wingame):
 				vida += -1
 			else:
 				imginitela[cont].undraw()
-				celas[cont].undraw()
+			cont += 1
+		cont = 0
+		while(cont < nvida):
+			imgvida[cont].undraw()
 			cont += 1
 		nivel += 1
 		score +=10*(9.0 - nivel/4 - tempo) + 1000
